@@ -28,7 +28,7 @@
 
 body {
   font-family: 'Poppins', sans-serif;
-  background-color: var(--color-bg-dark);
+  background-color: var(--color-bg);
   color: var(--color-white);
   line-height: 1.7;
   background-image: url(../src/assets/bg-texture.png);
@@ -53,4 +53,10 @@ html {
     transform: translateY(3px);
   }
 
+}
+
+.slide{
+  display: flex;
+  justify-content: center;
+  margin-bottom: 3rem;
 }
