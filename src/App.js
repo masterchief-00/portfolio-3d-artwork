@@ -1,6 +1,7 @@
 import './App.css';
 import Header from './components/Header';
 import Nav from './components/Nav';
+import Recent from './components/Recent';
 import Socials from './components/Socials';
 import Top from './components/Top';
 
@@ -11,6 +12,7 @@ function App() {
       <Nav />
       <Socials />
       <Top />
+      <Recent />
     </div>
   );
 }

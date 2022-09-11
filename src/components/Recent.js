@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import Fade from "react-reveal/Fade";
 import Jump from "react-reveal/Jump";
-import { FaAward } from "react-icons/fa";
+import { RiTimerFill } from "react-icons/ri";
 import {
   Navigation,
   Pagination,
@@ -16,26 +16,22 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "swiper/css/autoplay";
 
-import IMG1 from "../assets/projects/avia-b534_008.png";
-import IMG2 from "../assets/projects/chief11.png";
-import IMG3 from "../assets/projects/earth01.png";
-import IMG4 from "../assets/projects/madMax_scene01.jpg";
-import IMG5 from "../assets/projects/skull_yshi01.jpg";
-import IMG6 from "../assets/projects/statue01.jpg";
-import IMG7 from "../assets/projects/stdisc_klingon_rifle01.jpg";
+import IMG1 from "../assets/projects/klingonMiner01.jpg";
+import IMG2 from "../assets/projects/statue10.jpg";
+import IMG3 from "../assets/projects/borgQueenv2_01.jpg";
 
-const Top = () => {
+const Recent = () => {
   return (
     <Container>
       <Jump bottom>
         <IconHeader>
           <h1>
-            <FaAward />
+            <RiTimerFill />
           </h1>
         </IconHeader>
       </Jump>
       <Fade bottom>
-        <h1>Highly rated projects we've worked on</h1>
+        <h1>Most recent projects we've worked on</h1>
       </Fade>
 
       <Swiper
@@ -46,7 +42,7 @@ const Top = () => {
         // navigation
         mousewheel
         loop
-        autoplay={{ delay: 5000, disableOnInteraction: false }}
+        autoplay={{ delay: 3000, disableOnInteraction: false }}
         pagination={{ clickable: true }}
         scrollbar={{ draggable: true }}
       >
@@ -69,38 +65,6 @@ const Top = () => {
         <SwiperSlide className="slide">
           <Card>
             <Picture src={IMG3} alt="" />
-            <p>
-              There are many variations of passages of Lorem Ipsum available
-            </p>
-          </Card>
-        </SwiperSlide>
-        <SwiperSlide className="slide">
-          <Card>
-            <Picture src={IMG4} alt="" />
-            <p>
-              There are many variations of passages of Lorem Ipsum available
-            </p>
-          </Card>
-        </SwiperSlide>
-        <SwiperSlide className="slide">
-          <Card>
-            <Picture src={IMG5} alt="" />
-            <p>
-              There are many variations of passages of Lorem Ipsum available
-            </p>
-          </Card>
-        </SwiperSlide>
-        <SwiperSlide className="slide">
-          <Card>
-            <Picture src={IMG6} alt="" />
-            <p>
-              There are many variations of passages of Lorem Ipsum available
-            </p>
-          </Card>
-        </SwiperSlide>
-        <SwiperSlide className="slide">
-          <Card>
-            <Picture src={IMG7} alt="" />
             <p>
               There are many variations of passages of Lorem Ipsum available
             </p>
@@ -136,6 +100,7 @@ const Container = styled.div`
     }
   }
 `;
+
 const IconHeader = styled.div`
   display: flex;
   flex-direction: row;
@@ -151,6 +116,7 @@ const IconHeader = styled.div`
     background-color: var(--color-white);
   }
 `;
+
 const Card = styled.div`
   padding: 1rem;
   align-items: center;
@@ -160,7 +126,7 @@ const Card = styled.div`
   width: max-content;
   height: max-content;
   overflow: hidden;
-  background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3));
+  background: linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.1));
 
   /* ======SMALL DEVICES====== */
 
@@ -208,4 +174,4 @@ const Picture = styled.img`
     border-radius: 1rem;
   }
 `;
-export default Top;
+export default Recent;
