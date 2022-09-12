@@ -2,8 +2,10 @@ import React from "react";
 import styled from "styled-components";
 import { FiHome } from "react-icons/fi";
 import { FaAward } from "react-icons/fa";
-import {RiTimerFill} from 'react-icons/ri'
+import {RiTimerFill, RiMessage2Fill} from 'react-icons/ri'
 import {MdCollections} from 'react-icons/md'
+import {BsFillCalendarDayFill} from 'react-icons/bs'
+
 const Nav = () => {
   return (
     <Container>
@@ -17,7 +19,13 @@ const Nav = () => {
         <RiTimerFill />
       </Anchor>
       <Anchor href="#">
+        <BsFillCalendarDayFill />
+      </Anchor>
+      <Anchor href="#">
         <MdCollections />
+      </Anchor>
+      <Anchor href="#">
+        <RiMessage2Fill />
       </Anchor>
     </Container>
   );
@@ -26,7 +34,7 @@ const Nav = () => {
 const Container = styled.div`
   position: fixed;
   padding: 1.9rem 0.9rem;
-  bottom: 14rem;
+  bottom: 8rem;
   display: flex;
   flex-direction: column;
   gap: 0.8rem;

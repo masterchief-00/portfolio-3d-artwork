@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import Fade from "react-reveal/Fade";
 import Jump from "react-reveal/Jump";
-import { RiTimerFill } from "react-icons/ri";
+import {BsFillCalendarDayFill} from 'react-icons/bs'
 import {
   Navigation,
   Pagination,
@@ -26,7 +26,7 @@ const Recent = () => {
       <Jump bottom>
         <IconHeader>
           <h1>
-            <RiTimerFill />
+            <BsFillCalendarDayFill />
           </h1>
         </IconHeader>
       </Jump>
