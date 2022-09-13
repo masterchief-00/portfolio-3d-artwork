@@ -1,6 +1,7 @@
 import './App.css';
 import Contact from './components/Contact';
 import Header from './components/Header';
+import Invitation from './components/Invitation';
 import Nav from './components/Nav';
 import OnGoing from './components/OnGoing';
 import Recent from './components/Recent';
@@ -16,7 +17,8 @@ function App() {
       <Top />
       <Recent />
       <OnGoing />
-      <Contact />
+      <Invitation />
+      <Contact />      
     </div>
   );
 }

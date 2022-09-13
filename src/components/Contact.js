@@ -2,12 +2,13 @@ import React from "react";
 import styled from "styled-components";
 import Fade from "react-reveal/Fade";
 import Jump from "react-reveal/Jump";
+import Slide from "react-reveal/Slide";
 import { RiMessage2Fill } from "react-icons/ri";
-import {FiSend} from 'react-icons/fi';
+import { FiSend } from "react-icons/fi";
 
 const Contact = () => {
   return (
-    <Container>
+    <Container id="message">
       <Jump bottom>
         <IconHeader>
           <h1>
@@ -20,10 +21,22 @@ const Contact = () => {
       </Fade>
       <Wrapper>
         <Form method="POST">
-          <Field type="text" name="name" placeholder="name" />
-          <Field type="email" name="email" placeholder="Email" />
-          <Message name="message" placeholder="Message" />
-            <Button type="submit">Send <FiSend /></Button>
+          <Slide left>
+            <Field type="text" name="name" placeholder="name" />
+          </Slide>
+          <Slide right>
+            <Field type="email" name="email" placeholder="Email" />
+          </Slide>
+
+          <Slide bottom>
+            <Message name="message" placeholder="Message" />
+          </Slide>
+
+          <Jump bottom>
+            <Button type="submit">
+              Send <FiSend />
+            </Button>
+          </Jump>
         </Form>
       </Wrapper>
     </Container>
@@ -74,7 +87,7 @@ const Form = styled.form`
   justify-content: center;
   align-items: center;
   margin-top: 20px;
-  gap: 0.5rem;  
+  gap: 0.5rem;
 `;
 const Field = styled.input`
   background-color: transparent;
@@ -97,19 +110,19 @@ const Field = styled.input`
 
   /* ======SMALL DEVICES====== */
 
-  @media screen and (max-width: 600px){
-      padding: 0.6rem;
-      border-radius: 0.6rem;
-      font-size: 13px;
-      width: 60vw;
+  @media screen and (max-width: 600px) {
+    padding: 0.6rem;
+    border-radius: 0.6rem;
+    font-size: 13px;
+    width: 60vw;
   }
 
   /* ======MEDIUM DEVICES======= */
-  @media screen and (min-width: 601px) and (max-width: 1024px){
+  @media screen and (min-width: 601px) and (max-width: 1024px) {
     padding: 0.9rem;
-      border-radius: 0.9rem;
-      font-size: 25px;
-      width: 70vw;
+    border-radius: 0.9rem;
+    font-size: 25px;
+    width: 70vw;
   }
 `;
 
@@ -131,30 +144,29 @@ const Message = styled.textarea`
   }
 
   /* ======SMALL DEVICES====== */
-  @media screen and (max-width: 600px){
-      padding: 0.6rem;
-      border-radius: 0.6rem;
-      font-size: 13px;
-      width: 60vw;
-
+  @media screen and (max-width: 600px) {
+    padding: 0.6rem;
+    border-radius: 0.6rem;
+    font-size: 13px;
+    width: 60vw;
   }
 
   /* ======MEDIUM DEVICES======= */
-  @media screen and (min-width: 601px) and (max-width: 1024px){
+  @media screen and (min-width: 601px) and (max-width: 1024px) {
     padding: 0.9rem;
-      border-radius: 0.9rem;
-      font-size: 25px;
-      width: 70vw;
+    border-radius: 0.9rem;
+    font-size: 25px;
+    width: 70vw;
   }
 `;
-const Button=styled.button`
-    padding: 0.8rem;
-    width: 8rem;
-    margin-top: 10px;
-    background-color: var(--color-primary-variant);
-    border: solid 1px transparent;
-    border-radius: 1rem;
-    font-size: 16px;
-    font-weight: bold;    
-`
+const Button = styled.button`
+  padding: 0.8rem;
+  width: 8rem;
+  margin-top: 10px;
+  background-color: var(--color-primary-variant);
+  border: solid 1px transparent;
+  border-radius: 1rem;
+  font-size: 16px;
+  font-weight: bold;
+`;
 export default Contact;

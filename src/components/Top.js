@@ -26,7 +26,7 @@ import IMG7 from "../assets/projects/stdisc_klingon_rifle01.jpg";
 
 const Top = () => {
   return (
-    <Container>
+    <Container id="favorites">
       <Jump bottom>
         <IconHeader>
           <h1>

@@ -2,12 +2,13 @@ import React from "react";
 import styled from "styled-components";
 import Fade from "react-reveal/Fade";
 import Jump from "react-reveal/Jump";
+import Slide from "react-reveal/Slide";
 import { RiTimerFill } from "react-icons/ri";
 import { FiExternalLink } from "react-icons/fi";
 
 const OnGoing = () => {
   return (
-    <Container>
+    <Container id="onGoing">
       <Jump bottom>
         <IconHeader>
           <h1>
@@ -19,45 +20,51 @@ const OnGoing = () => {
         <h1>On-going Projects</h1>
       </Fade>
       <Wrapper>
-        <Card>
-          <h1>Project Epic</h1>
-          <ProjectDetails>
-            <label>Since: 25/08/2022</label>
-            <label>Target: CGI</label>
-            <label>
-              <a href="#">
-                See references
-                <FiExternalLink />
-              </a>
-            </label>
-          </ProjectDetails>
-        </Card>
-        <Card>
-          <h1>Klingon Shotgun</h1>
-          <ProjectDetails>
-            <label>Since: 12/09/2022</label>
-            <label>Target: 3D printing</label>
-            <label>
-              <a href="#">
-                See references
-                <FiExternalLink />
-              </a>
-            </label>
-          </ProjectDetails>
-        </Card>
-        <Card>
-          <h1>UNSC Infinity</h1>
-          <ProjectDetails>
-            <label>Since: 3/09/2022</label>
-            <label>Target: CGI</label>
-            <label>
-              <a href="#">
-                See references
-                <FiExternalLink />
-              </a>
-            </label>
-          </ProjectDetails>
-        </Card>
+        <Slide right>
+          <Card>
+            <h1>Project Epic</h1>
+            <ProjectDetails>
+              <label>Since: 25/08/2022</label>
+              <label>Target: CGI</label>
+              <label>
+                <a href="#">
+                  See references
+                  <FiExternalLink />
+                </a>
+              </label>
+            </ProjectDetails>
+          </Card>
+        </Slide>
+        <Slide right>
+          <Card>
+            <h1>Klingon Shotgun</h1>
+            <ProjectDetails>
+              <label>Since: 12/09/2022</label>
+              <label>Target: 3D printing</label>
+              <label>
+                <a href="#">
+                  See references
+                  <FiExternalLink />
+                </a>
+              </label>
+            </ProjectDetails>
+          </Card>
+        </Slide>
+        <Slide right>
+          <Card>
+            <h1>UNSC Infinity</h1>
+            <ProjectDetails>
+              <label>Since: 3/09/2022</label>
+              <label>Target: CGI</label>
+              <label>
+                <a href="#">
+                  See references
+                  <FiExternalLink />
+                </a>
+              </label>
+            </ProjectDetails>
+          </Card>
+        </Slide>
       </Wrapper>
     </Container>
   );
@@ -69,6 +76,7 @@ const Container = styled.div`
   margin-top: 10vh;
   padding: 2rem 8rem;
 
+  /* ============SMALL DEVICES=========== */
   @media screen and (max-width: 600px) {
     padding: 0.5rem 2rem;
     h1 {
@@ -113,18 +121,17 @@ const Card = styled.div`
 
   /* ======SMALL DEVICES====== */
 
-  @media screen and (max-width: 600px){
+  @media screen and (max-width: 600px) {
     padding: 0.6rem;
-    h1{
+    h1 {
       font-size: 16px;
     }
   }
 
   /* ======MEDIUM DEVICES======= */
 
-  @media screen and (min-width: 601px) and (max-width: 1024px){
+  @media screen and (min-width: 601px) and (max-width: 1024px) {
     padding: 1rem;
-    
   }
 `;
 const ProjectDetails = styled.div`
@@ -141,18 +148,18 @@ const ProjectDetails = styled.div`
     color: var(--color-white);
   }
 
-  @media screen and (max-width: 600px){
+  @media screen and (max-width: 600px) {
     justify-content: space-around;
-    label:first-of-type{
+    label:first-of-type {
       display: none;
     }
   }
   /* ======MEDIUM DEVICES======= */
 
-  @media screen and (min-width: 601px) and (max-width: 1024px){
+  @media screen and (min-width: 601px) and (max-width: 1024px) {
     label {
-    font-size: 18px;
-  }
+      font-size: 18px;
+    }
   }
 `;
 export default OnGoing;

@@ -60,3 +60,7 @@ html {
   justify-content: center;
   margin-bottom: 3rem;
 }
+.active{
+  color: var(--color-primary-variant) !important;
+  background-color: var(--color-bg-dark) !important;
+}

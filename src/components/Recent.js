@@ -22,7 +22,7 @@ import IMG3 from "../assets/projects/borgQueenv2_01.jpg";
 
 const Recent = () => {
   return (
-    <Container>
+    <Container id="recent">
       <Jump bottom>
         <IconHeader>
           <h1>

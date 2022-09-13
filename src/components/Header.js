@@ -11,7 +11,7 @@ import arrow from "../assets/down-arrow.svg";
 
 const Header = () => {
   return (
-    <Container>
+    <Container id="home">
       <Banner>
         <ItemText>
           <Fade bottom>
