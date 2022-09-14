@@ -5,6 +5,7 @@ import Jump from "react-reveal/Jump";
 import Slide from "react-reveal/Slide";
 import vid from "../assets/planetScene(1min).mp4";
 import IMG1 from "../assets/banner/Brabham001.png";
+import IMG2 from "../assets/banner/gas_station004.png";
 import { FiExternalLink } from "react-icons/fi";
 import { MdCollections } from "react-icons/md";
 
@@ -35,7 +36,7 @@ const Invitation = () => {
           <Slide bottom>
             <Gate>
               <h1>Gallery</h1>
-              <a href="#">
+              <a href="/gallery">
                 Click here
                 <FiExternalLink />
               </a>
@@ -58,6 +59,15 @@ const Container = styled.div`
   padding: 2rem 8rem;
   margin-top: 10vh;
   overflow: hidden;
+
+  /* ============SMALL DEVICES=========== */
+  @media screen and (max-width: 600px) {
+    padding: 0.5rem 2rem;
+    height: 100vh;
+    h1 {
+      font-size: 18px;
+    }
+  }
 `;
 const IconHeader = styled.div`
   display: flex;
@@ -77,13 +87,62 @@ const IconHeader = styled.div`
 const Wrapper = styled.div`
   height: max-content;
   width: max-content;
-  padding: 2rem;
+  padding: 2rem 4rem;
   margin-top: 20px;
 
   video {
     height: 85vh;
     border-radius: 2rem;
     filter: brightness(40%);
+  }
+
+  /* ============SMALL DEVICES=========== */
+  @media screen and (max-width: 600px) {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    width: 80vw;
+    height: 80vh;
+    border-radius: 2rem;
+    background:
+        /* top, transparent black, faked with gradient */ linear-gradient(
+        rgba(0, 0, 0, 0.5),
+        rgba(0, 0, 0, 0.5)
+      ),
+      /* bottom, image */ url(${IMG1});
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    video {
+      display: none;
+    }
+  }
+
+  /* ======MEDIUM DEVICES======= */
+
+  @media screen and (min-width: 601px) and (max-width: 1024px){
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    width: 80vw;
+    height: 85vh;
+    border-radius: 2rem;
+    background:
+        /* top, transparent black, faked with gradient */ linear-gradient(
+        rgba(0, 0, 0, 0.5),
+        rgba(0, 0, 0, 0.5)
+      ),
+      /* bottom, image */ url(${IMG2});
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    video {
+      display: none;
+    }
   }
 `;
 const Text = styled.div`
@@ -107,6 +166,39 @@ const Text = styled.div`
     text-decoration: none;
     color: var(--color-white);
   }
+
+  /* ============SMALL DEVICES=========== */
+  @media screen and (max-width: 600px) {
+    position: unset;
+    z-index: unset;
+    left: unset;
+    transform: unset;
+    width: 60vw;
+    
+    h1{
+      font-size: 1.2em;
+    }
+  }
+
+  /* ======MEDIUM DEVICES======= */
+
+  @media screen and (min-width: 601px) and (max-width: 1024px){
+    position: unset;
+    z-index: unset;
+    left: unset;
+    transform: unset;
+    width: 70vw;
+    
+    h1{
+      font-size: 2.7em;
+    }
+    p{
+      font-size: 1.8em;
+    }
+    a{
+      font-size: 1.6em;
+    }
+  }
 `;
 
 const Gate = styled.div`
@@ -117,6 +209,18 @@ const Gate = styled.div`
   width: max-content;
   a {
     color: var(--color-light);
+  }
+
+  /* ============SMALL DEVICES=========== */
+  @media screen and (max-width: 600px){
+    padding: 0.6rem 2.5rem;
+    border-radius: 1rem;
+  }
+
+  /* ======MEDIUM DEVICES======= */
+
+  @media screen and (min-width: 601px) and (max-width: 1024px){
+    border: solid 2px var(--color-primary-variant);
   }
 `;
 export default Invitation;
