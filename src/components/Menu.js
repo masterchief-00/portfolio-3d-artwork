@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { IoIosArrowBack } from "react-icons/io";
 import { SiBlender } from "react-icons/si";
@@ -6,6 +6,8 @@ import { BiPrinter } from "react-icons/bi";
 import Fade from "react-reveal/Fade";
 
 const Menu = () => {
+  const [activeTab, setactiveTab] = useState("cgi");
+
   return (
     <Container>
       <Wrapper>
@@ -15,12 +17,24 @@ const Menu = () => {
           </Item>
         </Fade>
         <Fade bottom>
-          <Item href="#">
+          <Item
+            href="#"
+            className={activeTab === "cgi" ? "active-tab" : ""}
+            onClick={() => {
+              setactiveTab("cgi");
+            }}
+          >
             <SiBlender /> CGI Projects
           </Item>
         </Fade>
         <Fade bottom>
-          <Item href="#">
+          <Item
+            href="#"
+            className={activeTab === "print" ? "active-tab" : ""}
+            onClick={() => {
+              setactiveTab("print");
+            }}
+          >
             <BiPrinter /> 3D Printing projects
           </Item>
         </Fade>
@@ -31,6 +45,8 @@ const Menu = () => {
 
 const Container = styled.div`
   margin-top: 80px;
+  height: max-content;
+  width: 100%;
 
   /* ======SMALL DEVICES====== */
 
@@ -50,6 +66,8 @@ const Wrapper = styled.div`
   justify-content: center;
   align-items: center;
   gap: 2rem;
+  height: max-content;
+  width: 100%;
 
   /* ======SMALL DEVICES====== */
 
@@ -68,21 +86,21 @@ const Item = styled.a`
   color: var(--color-white);
   border: solid 1px var(--color-white);
   border-radius: 0.4rem;
-  padding: 0.4rem;
+  padding: 1rem;
   transition: all 0.4s;
   font-size: 15px;
 
   &:hover {
     background-color: var(--color-primary-variant-x);
-    text-decoration: underline;
     border-color: transparent;
-    margin-bottom: 1.5em;
+    border-radius: 2rem;
   }
 
   /* ======MEDIUM DEVICES======= */
 
   @media screen and (min-width: 601px) and (max-width: 1024px) {
     font-size: 25px;
+    padding: 0.4rem;
   }
 `;
 export default Menu;
