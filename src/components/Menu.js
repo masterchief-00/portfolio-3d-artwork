@@ -1,12 +1,22 @@
-import React, { useState } from "react";
+import React from "react";
+import { useSelector, useDispatch } from "react-redux";
 import styled from "styled-components";
 import { IoIosArrowBack } from "react-icons/io";
 import { SiBlender } from "react-icons/si";
 import { BiPrinter } from "react-icons/bi";
 import Fade from "react-reveal/Fade";
+import { galleryActions } from "../store/gallery-slice";
 
 const Menu = () => {
-  const [activeTab, setactiveTab] = useState("cgi");
+  const activeTab = useSelector((state) => state.gallery.tab);
+  const dispatch = useDispatch();
+  const handleSwitch = () => {
+    dispatch(
+      galleryActions.switchTab({
+        type: activeTab.type === "cgi" ? "print" : "cgi",
+      })
+    );
+  };
 
   return (
     <Container>
@@ -19,10 +29,8 @@ const Menu = () => {
         <Fade bottom>
           <Item
             href="#"
-            className={activeTab === "cgi" ? "active-tab" : ""}
-            onClick={() => {
-              setactiveTab("cgi");
-            }}
+            className={activeTab.type === "cgi" ? "active-tab" : ""}
+            onClick={handleSwitch}
           >
             <SiBlender /> CGI Projects
           </Item>
@@ -30,10 +38,8 @@ const Menu = () => {
         <Fade bottom>
           <Item
             href="#"
-            className={activeTab === "print" ? "active-tab" : ""}
-            onClick={() => {
-              setactiveTab("print");
-            }}
+            className={activeTab.type === "print" ? "active-tab" : ""}
+            onClick={handleSwitch}
           >
             <BiPrinter /> 3D Printing projects
           </Item>

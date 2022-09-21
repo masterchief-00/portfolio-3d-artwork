@@ -2,13 +2,17 @@ import React from "react";
 import styled from "styled-components";
 import { FiExternalLink } from "react-icons/fi";
 
-import IMG1 from "../assets/projects/avia-b534_008.png";
-import IMG2 from "../assets/projects/chief11.png";
-import IMG3 from "../assets/projects/earth01.png";
-import IMG4 from "../assets/projects/madMax_scene01.jpg";
-import IMG5 from "../assets/projects/skull_yshi01.jpg";
-import IMG6 from "../assets/projects/statue01.jpg";
+import IMG1 from "../assets/projects/blaster_5.jpg";
+import IMG2 from "../assets/projects/klingon_pistol01.jpg";
+import IMG3 from "../assets/projects/orville_rifle03.jpg";
+import IMG4 from "../assets/projects/picard_rifle01_.jpg";
+import IMG5 from "../assets/projects/shockrifle01.jpg";
+import IMG6 from "../assets/projects/klingonMiner01.jpg";
 import IMG7 from "../assets/projects/stdisc_klingon_rifle01.jpg";
+import IMG8 from "../assets/projects/skull_yshi01.jpg";
+import IMG9 from "../assets/projects/skull_lihnZee05.jpg";
+
+
 
 const Printing = () => {
   return (
@@ -100,6 +104,34 @@ const Printing = () => {
         </Card>
         <Card>
           <Picture src={IMG7} />
+          <p>Project Title goes here</p>
+          <ItemDetails>
+            <label>Completed: 01/01/2020</label>
+            <label>3D Printing</label>
+            <label>
+              <a href="#">
+                See more
+                <FiExternalLink />
+              </a>
+            </label>
+          </ItemDetails>
+        </Card>
+        <Card>
+          <Picture src={IMG8} />
+          <p>Project Title goes here</p>
+          <ItemDetails>
+            <label>Completed: 01/01/2020</label>
+            <label>3D Printing</label>
+            <label>
+              <a href="#">
+                See more
+                <FiExternalLink />
+              </a>
+            </label>
+          </ItemDetails>
+        </Card>
+        <Card>
+          <Picture src={IMG9} />
           <p>Project Title goes here</p>
           <ItemDetails>
             <label>Completed: 01/01/2020</label>

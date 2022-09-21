@@ -9,8 +9,21 @@ import IMG4 from "../assets/projects/madMax_scene01.jpg";
 import IMG5 from "../assets/projects/skull_yshi01.jpg";
 import IMG6 from "../assets/projects/statue01.jpg";
 import IMG7 from "../assets/projects/stdisc_klingon_rifle01.jpg";
+import { useDispatch, useSelector } from "react-redux";
+import ProjectDetails from "./ProjectDetails";
+import { modalActions } from "../store/modal-slice";
 
 const CGI = () => {
+  const modalActive = useSelector((state) => state.modal.isOpen);
+  const dispatch = useDispatch();
+
+  const handleDetails = () => {
+    dispatch(
+      modalActions.setIsopen({
+        status: true,
+      })
+    );
+  };
   return (
     <Container>
       <Wrapper>
@@ -21,7 +34,7 @@ const CGI = () => {
             <label>Completed: 01/01/2020</label>
             <label>CGI</label>
             <label>
-              <a href="#">
+              <a href="#" onClick={handleDetails}>
                 See more
                 <FiExternalLink />
               </a>
@@ -113,6 +126,7 @@ const CGI = () => {
           </ItemDetails>
         </Card>
       </Wrapper>
+      {modalActive.status && <ProjectDetails />}
     </Container>
   );
 };
@@ -139,7 +153,7 @@ const Wrapper = styled.div`
 
   /* ======MEDIUM DEVICES======= */
 
-  @media screen and (min-width: 601px) and (max-width: 1024px){
+  @media screen and (min-width: 601px) and (max-width: 1024px) {
     grid-template-columns: 1fr;
   }
 `;
@@ -162,19 +176,18 @@ const Card = styled.div`
     border-color: var(--color-white);
     background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.9));
   }
-  p{
-      margin-top: 15px;
+  p {
+    margin-top: 15px;
   }
 
   /* ======MEDIUM DEVICES======= */
 
-  @media screen and (min-width: 601px) and (max-width: 1024px){
-    p{
+  @media screen and (min-width: 601px) and (max-width: 1024px) {
+    p {
       font-size: 27px;
     }
   }
-
-  `;
+`;
 const ItemDetails = styled.div`
   display: flex;
   flex-direction: row;
@@ -194,9 +207,9 @@ const ItemDetails = styled.div`
 
   /* ======MEDIUM DEVICES======= */
 
-  @media screen and (min-width: 601px) and (max-width: 1024px){
+  @media screen and (min-width: 601px) and (max-width: 1024px) {
     gap: 6rem;
-    label{
+    label {
       font-size: 20px;
     }
   }
@@ -206,7 +219,7 @@ const Picture = styled.img`
 
   /* ======MEDIUM DEVICES======= */
 
-  @media screen and (min-width: 601px) and (max-width: 1024px){
+  @media screen and (min-width: 601px) and (max-width: 1024px) {
     height: 370px;
   }
 `;

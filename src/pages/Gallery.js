@@ -1,15 +1,14 @@
 import styled from "styled-components";
 import Fade from "react-reveal/Fade";
 import Jump from "react-reveal/Jump";
-import Slide from "react-reveal/Slide";
 import Tada from "react-reveal/Tada";
 
 import Menu from "../components/Menu";
-import CGI from "../components/CGI";
 
 import IMG1 from "../assets/banner/gas_station004.png";
 import IMG2 from "../assets/banner/robot_guy004.png";
 import IMG3 from "../assets/banner/bot39_5.jpg";
+import Projects from "../components/Projects";
 
 const Gallery = () => {
   return (
@@ -29,7 +28,7 @@ const Gallery = () => {
         </ItemText>
         <Menu />
       </Banner>
-      <CGI />
+      <Projects />
     </Container>
   );
 };
