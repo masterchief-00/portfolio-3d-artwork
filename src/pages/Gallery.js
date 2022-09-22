@@ -75,6 +75,7 @@ const Banner = styled.div`
     width: 100vw;
     padding: 0 2rem;
     border-radius: 0;
+    overflow-x: hidden;
 
     background:
         /* top, transparent black, faked with gradient */ linear-gradient(

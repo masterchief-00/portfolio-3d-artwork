@@ -11,10 +11,32 @@ import IMG6 from "../assets/projects/klingonMiner01.jpg";
 import IMG7 from "../assets/projects/stdisc_klingon_rifle01.jpg";
 import IMG8 from "../assets/projects/skull_yshi01.jpg";
 import IMG9 from "../assets/projects/skull_lihnZee05.jpg";
+import { useDispatch, useSelector } from "react-redux";
+import { modalActions } from "../store/modal-slice";
+import ProjectDetails from "./ProjectDetails";
+import { galleryActions } from "../store/gallery-slice";
 
 
 
 const Printing = () => {
+  const modalActive = useSelector((state) => state.modal.isOpen);
+  const dispatch = useDispatch();
+
+  const handleDetails = (e) => {
+    e.preventDefault();
+    const projectId=e.target.id;
+    
+    dispatch(
+      modalActions.setIsopen({
+        status: true,
+      })
+    );
+    dispatch(
+      galleryActions.loadProjectDetails(projectId)
+    )
+  };
+
+
   return (
     <Container>
       <Wrapper>
@@ -25,7 +47,7 @@ const Printing = () => {
             <label>Completed: 01/01/2020</label>
             <label>3D Printing</label>
             <label>
-              <a href="#">
+              <a href="#" id={8} onClick={handleDetails}>
                 See more
                 <FiExternalLink />
               </a>
@@ -39,7 +61,7 @@ const Printing = () => {
             <label>Completed: 01/01/2020</label>
             <label>3D Printing</label>
             <label>
-              <a href="#">
+              <a href="#" id={9} onClick={handleDetails}>
                 See more
                 <FiExternalLink />
               </a>
@@ -53,7 +75,7 @@ const Printing = () => {
             <label>Completed: 01/01/2020</label>
             <label>3D Printing</label>
             <label>
-              <a href="#">
+              <a href="#" id={10} onClick={handleDetails}>
                 See more
                 <FiExternalLink />
               </a>
@@ -67,7 +89,7 @@ const Printing = () => {
             <label>Completed: 01/01/2020</label>
             <label>3D Printing</label>
             <label>
-              <a href="#">
+              <a href="#" id={11} onClick={handleDetails}>
                 See more
                 <FiExternalLink />
               </a>
@@ -81,7 +103,7 @@ const Printing = () => {
             <label>Completed: 01/01/2020</label>
             <label>3D Printing</label>
             <label>
-              <a href="#">
+              <a href="#" id={12} onClick={handleDetails}>
                 See more
                 <FiExternalLink />
               </a>
@@ -95,7 +117,7 @@ const Printing = () => {
             <label>Completed: 01/01/2020</label>
             <label>3D Printing</label>
             <label>
-              <a href="#">
+              <a href="#" id={13} onClick={handleDetails}>
                 See more
                 <FiExternalLink />
               </a>
@@ -109,7 +131,7 @@ const Printing = () => {
             <label>Completed: 01/01/2020</label>
             <label>3D Printing</label>
             <label>
-              <a href="#">
+              <a href="#" id={14} onClick={handleDetails}>
                 See more
                 <FiExternalLink />
               </a>
@@ -123,7 +145,7 @@ const Printing = () => {
             <label>Completed: 01/01/2020</label>
             <label>3D Printing</label>
             <label>
-              <a href="#">
+              <a href="#" id={15} onClick={handleDetails}>
                 See more
                 <FiExternalLink />
               </a>
@@ -137,7 +159,7 @@ const Printing = () => {
             <label>Completed: 01/01/2020</label>
             <label>3D Printing</label>
             <label>
-              <a href="#">
+              <a href="#" id={16} onClick={handleDetails}>
                 See more
                 <FiExternalLink />
               </a>
@@ -145,6 +167,8 @@ const Printing = () => {
           </ItemDetails>
         </Card>
       </Wrapper>
+      {modalActive.status && <ProjectDetails />}
+
     </Container>
   );
 };
@@ -180,19 +204,19 @@ const Card = styled.div`
   width: max-content;
   overflow: hidden;
   padding: 1rem;
-  border: solid 1px var(--color-primary-variant);
+  border: solid 1px var(--color-primary-variant-x);
   border-radius: 0.3rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background: linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.5));
-  transition: all 0.8s;
+  background-color: var(--color-bg-dark);
+  transition: all 0.4s;
 
   &:hover {
-    padding: 1.5rem;
-    border-color: var(--color-white);
-    background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.9));
+    padding: 0.5rem;
+    border-color:var(--color-primary-variant);
+    background-color: var(--color-bg-variant);
   }
   p{
       margin-top: 15px;

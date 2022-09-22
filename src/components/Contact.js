@@ -5,8 +5,22 @@ import Jump from "react-reveal/Jump";
 import Slide from "react-reveal/Slide";
 import { RiMessage2Fill } from "react-icons/ri";
 import { FiSend } from "react-icons/fi";
+import { useDispatch, useSelector } from "react-redux";
+import { modalActions } from "../store/modal-slice";
 
 const Contact = () => {
+  const messaging = useSelector((state) => state.modal.messaging);
+  const dispatch = useDispatch();
+
+  const handleInput = (e) => {
+    dispatch(
+      modalActions.setMessage({
+        name: e.target.name === "name" ? e.target.value : messaging.name,
+        email: e.target.name === "email" ? e.target.value : messaging.email,
+        message: e.target.name === "message" ? e.target.value : messaging.message,
+      })
+    );
+  };
   return (
     <Container id="message">
       <Jump bottom>
@@ -22,14 +36,31 @@ const Contact = () => {
       <Wrapper>
         <Form method="POST">
           <Slide left>
-            <Field type="text" name="name" placeholder="name" />
+            <Field
+              type="text"
+              name="name"
+              placeholder="name"
+              value={messaging.name}
+              onChange={handleInput}
+            />
           </Slide>
           <Slide right>
-            <Field type="email" name="email" placeholder="Email" />
+            <Field
+              type="email"
+              name="email"
+              placeholder="Email"
+              value={messaging.email}
+              onChange={handleInput}
+            />
           </Slide>
 
           <Slide bottom>
-            <Message name="message" placeholder="Message" />
+            <Message
+              name="message"
+              placeholder="Message"
+              value={messaging.message}
+              onChange={handleInput}
+            />
           </Slide>
 
           <Jump bottom>
@@ -168,5 +199,12 @@ const Button = styled.button`
   border-radius: 1rem;
   font-size: 16px;
   font-weight: bold;
+  transition: all 0.2s ease;
+
+  &:hover{
+    background-color: var(--color-bg);
+    border-color: var(--color-primary-variant);
+    color: var(--color-white);
+  }
 `;
 export default Contact;
