@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Black+Ops+One&display=swap');
 
 * {
   margin: 0;
@@ -34,7 +35,7 @@ body {
   line-height: 1.7;
   background-image: url(../src/assets/bg-texture.png);
   scroll-behavior: smooth;
-}
+  }
 
 html {
   scroll-behavior: smooth;
@@ -80,4 +81,8 @@ html {
   border-color: transparent !important; 
   border-radius: 2rem !important; 
   padding: 0.7rem !important; 
+}
+
+.admin-title{
+  font-family: 'Black Ops One', cursive;
 }
