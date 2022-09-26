@@ -1,35 +1,101 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import DropZone from "./DropZone";
 import { BiUpload } from "react-icons/bi";
 import { FaCloudUploadAlt } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import { uploadAction } from "../store/upload-slice";
+import { useDropzone } from "react-dropzone";
+import { RiDragDropLine } from "react-icons/ri";
+
+/* --------------------Drop zone------------------------ */
+
+const thumbsContainer = {
+  display: "flex",
+  flexDirection: "row",
+  flexWrap: "wrap",
+  marginTop: 16,
+};
+
+const thumb = {
+  display: "inline-flex",
+  borderRadius: 2,
+  border: "1px solid #eaeaea",
+  marginBottom: 8,
+  marginRight: 8,
+  width: 100,
+  height: 100,
+  padding: 4,
+  boxSizing: "border-box",
+};
+
+const thumbInner = {
+  display: "flex",
+  minWidth: 0,
+  overflow: "hidden",
+};
+
+const img = {
+  display: "block",
+  width: "auto",
+  height: "100%",
+};
+
+/* ----------------------------------------------------- */
 
 const ProjectUpload = () => {
   const uploadData = useSelector((state) => state.upload.uploadData);
+  const [files, setFiles] = useState([]);
   const dispatch = useDispatch();
 
+  const { getRootProps, getInputProps } = useDropzone({
+    accept: {
+      "image/*": [".jpeg", ".png"],
+    },
+    onDrop: (acceptedFiles) => {
+      setFiles(
+        acceptedFiles.map((file) =>
+          Object.assign(file, {
+            preview: URL.createObjectURL(file),
+          })
+        )
+      );
+    },
+  });
+
   const saveData = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
+    const imageFiles = [];
+    files.forEach((item) => {
+      imageFiles.push(item.name);
+    });
+    dispatch(
+      uploadAction.setUploadData({
+        images:imageFiles
+      })
+    )
+
     const formData = new FormData();
-    formData.append("name", e.target.name);
-    formData.append("discription", e.target.discription);
-    formData.append("init_date", e.target.init_date);
-    formData.append("completion_date", e.target.completion_date);
-    formData.append("categoryId", e.target.category);
-    // formData.append("images", e.target.images);
+    formData.append("name", uploadData.name);
+    formData.append("discription", uploadData.discription);
+    formData.append("init_date", uploadData.init_date);
+    formData.append("completion_date", uploadData.completion_date);
+    formData.append("categoryId", uploadData.category);
+    formData.append("images", imageFiles);
+    // imageFiles.forEach((image) => {
+    //   formData.append("images", image);
+    // });
+    console.log(...formData);
 
     try {
       const response = await axios({
         method: "post",
         url: "http://localhost:8000/api/upload-project",
         data: formData,
-        headers: { "Content-Type": "multipart/form-data" },
+        headers: { 'content-type': 'multipart/form-data' },
       });
-    } catch(error) {
-      console.log(error)
+    } catch (error) {
+      console.log(error);
     }
   };
 
@@ -37,11 +103,48 @@ const ProjectUpload = () => {
     e.preventDefault();
     dispatch(
       uploadAction.setUploadData({
-        [e.target.name]: e.target.value,
+        name: e.target.name === "name" ? e.target.value : uploadData.name,
+        discription:
+          e.target.name === "discription"
+            ? e.target.value
+            : uploadData.discription,
+        init_date:
+          e.target.name === "init_date"
+            ? e.target.value
+            : uploadData.init_date,
+        completion_date:
+          e.target.name === "completion_date"
+            ? e.target.value
+            : uploadData.completion_date,
+        category:
+          e.target.name === "category"
+            ? e.target.value
+            : uploadData.category,
       })
     );
-    
   };
+
+  const thumbs = files.map((file) => (
+    <div style={thumb} key={file.name}>
+      <div style={thumbInner}>
+        <img
+          src={file.preview}
+          style={img}
+          // Revoke data uri after image is loaded
+          onLoad={() => {
+            URL.revokeObjectURL(file.preview);
+          }}
+          alt={file.name}
+        />
+      </div>
+    </div>
+  ));
+
+  useEffect(() => {
+    // Make sure to revoke the data uris to avoid memory leaks, will run on unmount
+    return () => files.forEach((file) => URL.revokeObjectURL(file.preview));
+  }, []);
+
   return (
     <Container id="upload">
       <Wrapper>
@@ -51,32 +154,37 @@ const ProjectUpload = () => {
           </h1>
         </IconHeader>
         <h1>Project Upload</h1>
-        <Form onSubmit={saveData} >
+        <Form onSubmit={saveData}>
           <Field
             type="text"
             name="name"
+            value={uploadData.name}
             onChange={handleInput}
             placeholder="Project Title"
           />
           <Field
             type="text"
             name="init_date"
+            value={uploadData.init_date}
             onChange={handleInput}
             placeholder="Initial Date"
           />
           <Field
             type="text"
+            value={uploadData.completion_date}
             name="completion_date"
             onChange={handleInput}
             placeholder="Completion Date"
           />
           <Discription
             name="discription"
+            value={uploadData.discription}
             onChange={handleInput}
             placeholder="Project Discription"
           ></Discription>
           <Category
-            name="categoryId"
+            name="category"
+            value={uploadData.category}
             onChange={handleInput}
           >
             <option value="1" defaultValue={true}>
@@ -84,7 +192,16 @@ const ProjectUpload = () => {
             </option>
             <option value="2">3D Printing</option>
           </Category>
-          <DropZone />
+          <div className="container">
+            <DropField {...getRootProps({ className: "dropzone" })}>
+              <Field type="file" name="images" {...getInputProps()} />
+              <p>Drop or click to select the Render Images</p>
+              <label>
+                <RiDragDropLine />
+              </label>
+              <aside style={thumbsContainer}>{thumbs}</aside>
+            </DropField>
+          </div>
           <Submit type="submit">
             Upload <FaCloudUploadAlt />
           </Submit>
@@ -92,6 +209,19 @@ const ProjectUpload = () => {
       </Wrapper>
     </Container>
   );
+};
+
+const getColor = (props) => {
+  if (props.isDragAccept) {
+    return "#00e676";
+  }
+  if (props.isDragReject) {
+    return "#ff1744";
+  }
+  if (props.isFocused) {
+    return "#2196f3";
+  }
+  return "var(--color-primary-variant)";
 };
 
 const Container = styled.div`
@@ -291,6 +421,49 @@ const Submit = styled.button`
     margin-top: 30px;
     width: 15rem;
     font-size: 25px;
+  }
+`;
+
+const DropField = styled.div`
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  border-width: 1px;
+  width: 30vw;
+  border-color: ${(props) => getColor(props)};
+  border-style: dashed;
+  background-color: var(--color-bg-dark);
+  color: var(--color-primary-variant);
+  outline: none;
+  transition: border 0.24s ease-in-out;
+
+  p {
+    font-size: 16px;
+  }
+
+  label {
+    font-size: 20px;
+  }
+
+  /* ======SMALL DEVICES====== */
+
+  @media screen and (max-width: 600px) {
+    width: 60vw;
+  }
+
+  /* ======MEDIUM DEVICES======= */
+
+  @media screen and (min-width: 601px) and (max-width: 1024px) {
+    width: 70vw;
+
+    p {
+      font-size: 20px;
+    }
+    label {
+      font-size: 40px;
+    }
   }
 `;
 export default ProjectUpload;
