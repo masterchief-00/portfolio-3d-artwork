@@ -86,3 +86,36 @@ html {
 .admin-title{
   font-family: 'Black Ops One', cursive;
 }
+
+.swal2-container.swal2-center>.swal2-popup{
+  background-color: var(--color-bg-dark) !important;
+  border: solid 1px var(--color-bg-variant);
+}
+.swal2-html-container, .swal2-title{
+  color: white !important;
+}
+
+.swal2-x-mark-line-left{
+  background-color:var(--color-primary-variant) !important;
+}
+
+.swal2-x-mark-line-right{
+  background-color:var(--color-primary-variant) !important;
+}
+
+.swal2-icon.swal2-error{
+  border-color: var(--color-primary-variant) !important;
+}
+
+.swal2-success-ring{
+  border-color: rgba(11, 250, 250, 0.616) !important;
+}
+
+.swal2-success-line-tip,.swal2-success-line-long{
+  background-color: var(--color-primary-variant) !important;
+}
+
+.swal2-styled.swal2-confirm{
+  background-color: var(--color-primary-variant) !important;
+  color: black !important;
+}

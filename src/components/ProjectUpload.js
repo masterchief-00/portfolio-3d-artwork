@@ -4,9 +4,13 @@ import { BiUpload } from "react-icons/bi";
 import { FaCloudUploadAlt } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
+
 import { uploadAction } from "../store/upload-slice";
 import { useDropzone } from "react-dropzone";
 import { RiDragDropLine } from "react-icons/ri";
+
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
 
 /* --------------------Drop zone------------------------ */
 
@@ -46,11 +50,14 @@ const img = {
 const ProjectUpload = () => {
   const uploadData = useSelector((state) => state.upload.uploadData);
   const [files, setFiles] = useState([]);
+  const [submitEnabled, setSubmitStatus] = useState(false);
   const dispatch = useDispatch();
 
   const { getRootProps, getInputProps } = useDropzone({
     accept: {
-      "image/*": [".jpeg", ".png"],
+      "image/jpeg": [],
+      "image/png": [],
+      "image/jpg": [],
     },
     onDrop: (acceptedFiles) => {
       setFiles(
@@ -62,45 +69,68 @@ const ProjectUpload = () => {
       );
     },
   });
-
+  
+  const isEmptyForm = () => {
+    return uploadData.name === "" ||
+      uploadData.discription === "" ||
+      uploadData.init_date === "" ||
+      uploadData.completion_date === ""
+      ? true
+      : false;
+  };
   const saveData = async (e) => {
     e.preventDefault();
-    const imageFiles = [];
-    files.forEach((item) => {
-      imageFiles.push(item.name);
-    });
-    dispatch(
-      uploadAction.setUploadData({
-        images:imageFiles
-      })
-    )
-
-    const formData = new FormData();
-    formData.append("name", uploadData.name);
-    formData.append("discription", uploadData.discription);
-    formData.append("init_date", uploadData.init_date);
-    formData.append("completion_date", uploadData.completion_date);
-    formData.append("categoryId", uploadData.category);
-    formData.append("images", imageFiles);
-    // imageFiles.forEach((image) => {
-    //   formData.append("images", image);
-    // });
-    console.log(...formData);
-
-    try {
-      const response = await axios({
-        method: "post",
-        url: "http://localhost:8000/api/upload-project",
-        data: formData,
-        headers: { 'content-type': 'multipart/form-data' },
+    setSubmitStatus(true);
+    if (isEmptyForm()===true) {
+      fireAlert({
+        title: "Captain?",
+        body: "Some fields are empty",
+        icon: "error",
+        confirmButtonText: "Yes",
       });
-    } catch (error) {
-      console.log(error);
+
+      setSubmitStatus(false);
+    } else {
+      try {
+        const response = await axios({
+          method: "post",
+          mode: 'cors',
+          url: "http://localhost:8000/api/upload-project",
+          data: new FormData(document.getElementById("form")),          
+        });
+        if (response.status === 200) {
+          fireAlert({
+            title: "Aye, captain!",
+            body: response.data.message,
+            icon: "success",
+          });
+          dispatch(
+            uploadAction.setUploadData({
+              name: "",
+              category: "",
+              discription: "",
+              init_date: "",
+              completion_date: "",
+            })
+          );
+          setSubmitStatus(false);
+        }
+      } catch (error) {
+        let problem=error.response.status +", "+ error.response.statusText;
+        fireAlert({
+          title: "Captain?",
+          body: problem,
+          icon: "error",
+        });
+        setSubmitStatus(false);
+        console.log(error);
+      }
     }
   };
 
   const handleInput = (e) => {
     e.preventDefault();
+
     dispatch(
       uploadAction.setUploadData({
         name: e.target.name === "name" ? e.target.value : uploadData.name,
@@ -109,17 +139,13 @@ const ProjectUpload = () => {
             ? e.target.value
             : uploadData.discription,
         init_date:
-          e.target.name === "init_date"
-            ? e.target.value
-            : uploadData.init_date,
+          e.target.name === "init_date" ? e.target.value : uploadData.init_date,
         completion_date:
           e.target.name === "completion_date"
             ? e.target.value
             : uploadData.completion_date,
         category:
-          e.target.name === "category"
-            ? e.target.value
-            : uploadData.category,
+          e.target.name === "categoryId" ? e.target.value : uploadData.category,
       })
     );
   };
@@ -145,6 +171,15 @@ const ProjectUpload = () => {
     return () => files.forEach((file) => URL.revokeObjectURL(file.preview));
   }, []);
 
+  const MySwal = withReactContent(Swal);
+  const fireAlert = (props) => {
+    MySwal.fire({
+      title: <strong>{props.title}</strong>,
+      html: <i>{props.body}</i>,
+      icon: props.icon,
+    });
+  };
+
   return (
     <Container id="upload">
       <Wrapper>
@@ -154,7 +189,7 @@ const ProjectUpload = () => {
           </h1>
         </IconHeader>
         <h1>Project Upload</h1>
-        <Form onSubmit={saveData}>
+        <Form onSubmit={saveData} id="form">
           <Field
             type="text"
             name="name"
@@ -183,7 +218,7 @@ const ProjectUpload = () => {
             placeholder="Project Discription"
           ></Discription>
           <Category
-            name="category"
+            name="categoryId"
             value={uploadData.category}
             onChange={handleInput}
           >
@@ -194,7 +229,7 @@ const ProjectUpload = () => {
           </Category>
           <div className="container">
             <DropField {...getRootProps({ className: "dropzone" })}>
-              <Field type="file" name="images" {...getInputProps()} />
+              <Field type="file" name="images[]" {...getInputProps()} />
               <p>Drop or click to select the Render Images</p>
               <label>
                 <RiDragDropLine />
@@ -202,7 +237,8 @@ const ProjectUpload = () => {
               <aside style={thumbsContainer}>{thumbs}</aside>
             </DropField>
           </div>
-          <Submit type="submit">
+
+          <Submit type="submit" disabled={submitEnabled}>
             Upload <FaCloudUploadAlt />
           </Submit>
         </Form>
