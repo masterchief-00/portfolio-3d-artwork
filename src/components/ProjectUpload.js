@@ -113,6 +113,7 @@ const ProjectUpload = () => {
               completion_date: "",
             })
           );
+          setFiles([]);
           setSubmitStatus(false);
         }
       } catch (error) {
@@ -239,7 +240,7 @@ const ProjectUpload = () => {
           </div>
 
           <Submit type="submit" disabled={submitEnabled}>
-            Upload <FaCloudUploadAlt />
+            {submitEnabled?"Uploading...":"Upload"} <FaCloudUploadAlt />
           </Submit>
         </Form>
       </Wrapper>
@@ -443,6 +444,9 @@ const Submit = styled.button`
     background-color: var(--color-bg);
     border-color: var(--color-primary-variant);
     color: var(--color-white);
+  }
+  &:disabled{
+    cursor: not-allowed;
   }
   /* ======SMALL DEVICES====== */
 

@@ -23,7 +23,7 @@ const AdminHeader = () => {
             </a>
           </Item>
           <Item>
-            <a href="#">
+            <a href="#monitoring">
               <label>Monitor </label> 
               <TbHeartRateMonitor />
             </a>
