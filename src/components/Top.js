@@ -1,5 +1,8 @@
-import React from "react";
+import React,{useEffect} from "react";
 import styled from "styled-components";
+import { useSelector, useDispatch } from "react-redux";
+import axios from "axios";
+
 import Fade from "react-reveal/Fade";
 import Jump from "react-reveal/Jump";
 import { FaAward } from "react-icons/fa";
@@ -25,6 +28,26 @@ import IMG6 from "../assets/projects/statue01.jpg";
 import IMG7 from "../assets/projects/stdisc_klingon_rifle01.jpg";
 
 const Top = () => {
+  const projectData = useSelector((state) => state.render.projectData);
+  const dispatch = useDispatch();
+
+  const fetchProjects=async ()=>{
+    try {
+      const response=await axios({
+        method:'get',
+        mode:'cors',
+        url:'http://localhost:8000/api/getDetails/projects'
+      });
+
+      console.log(response);
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  useEffect(()=>{
+    fetchProjects();
+  },[])
   return (
     <Container id="favorites">
       <Jump bottom>
