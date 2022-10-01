@@ -1,4 +1,4 @@
-import React,{useEffect} from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
@@ -19,35 +19,33 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "swiper/css/autoplay";
 
-import IMG1 from "../assets/projects/avia-b534_008.png";
-import IMG2 from "../assets/projects/chief11.png";
-import IMG3 from "../assets/projects/earth01.png";
-import IMG4 from "../assets/projects/madMax_scene01.jpg";
-import IMG5 from "../assets/projects/skull_yshi01.jpg";
-import IMG6 from "../assets/projects/statue01.jpg";
-import IMG7 from "../assets/projects/stdisc_klingon_rifle01.jpg";
+import IMG1 from "../assets/loader.gif";
+
+import { renderActions } from "../store/render-slice";
 
 const Top = () => {
   const projectData = useSelector((state) => state.render.projectData);
+  const dataReady = useSelector((state) => state.render.ready);
   const dispatch = useDispatch();
 
-  const fetchProjects=async ()=>{
+  const fetchProjects = async () => {
     try {
-      const response=await axios({
-        method:'get',
-        mode:'cors',
-        url:'http://localhost:8000/api/getDetails/projects'
+      const response = await axios({
+        method: "get",
+        mode: "cors",
+        url: "http://localhost:8000/api/getDetails/projects",
       });
 
-      console.log(response);
+      dispatch(renderActions.setProjectData(response.data.projects));
+      dispatch(renderActions.setRecents());
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-  }
+  };
 
-  useEffect(()=>{
+  useEffect(() => {
     fetchProjects();
-  },[])
+  }, []);
   return (
     <Container id="favorites">
       <Jump bottom>
@@ -73,62 +71,21 @@ const Top = () => {
         pagination={{ clickable: true }}
         scrollbar={{ draggable: true }}
       >
-        <SwiperSlide className="slide">
-          <Card>
-            <Picture src={IMG1} alt="" />
-            <p>
-              There are many variations of passages of Lorem Ipsum available
-            </p>
-          </Card>
-        </SwiperSlide>
-        <SwiperSlide className="slide">
-          <Card>
-            <Picture src={IMG2} alt="" />
-            <p>
-              There are many variations of passages of Lorem Ipsum available
-            </p>
-          </Card>
-        </SwiperSlide>
-        <SwiperSlide className="slide">
-          <Card>
-            <Picture src={IMG3} alt="" />
-            <p>
-              There are many variations of passages of Lorem Ipsum available
-            </p>
-          </Card>
-        </SwiperSlide>
-        <SwiperSlide className="slide">
-          <Card>
-            <Picture src={IMG4} alt="" />
-            <p>
-              There are many variations of passages of Lorem Ipsum available
-            </p>
-          </Card>
-        </SwiperSlide>
-        <SwiperSlide className="slide">
-          <Card>
-            <Picture src={IMG5} alt="" />
-            <p>
-              There are many variations of passages of Lorem Ipsum available
-            </p>
-          </Card>
-        </SwiperSlide>
-        <SwiperSlide className="slide">
-          <Card>
-            <Picture src={IMG6} alt="" />
-            <p>
-              There are many variations of passages of Lorem Ipsum available
-            </p>
-          </Card>
-        </SwiperSlide>
-        <SwiperSlide className="slide">
-          <Card>
-            <Picture src={IMG7} alt="" />
-            <p>
-              There are many variations of passages of Lorem Ipsum available
-            </p>
-          </Card>
-        </SwiperSlide>
+        {!dataReady && (
+          <Loading>
+            <img src={IMG1} alt="loading" />
+          </Loading>
+        )}
+
+        {projectData.map((project) => (
+          <SwiperSlide className="slide" key={project.id}>
+            <Card>
+              <Picture src={project.imageSource} alt={project.title} />
+              <h3>{project.title}</h3>
+              <p>{project.body}</p>
+            </Card>
+          </SwiperSlide>
+        ))}
       </Swiper>
     </Container>
   );
@@ -231,4 +188,10 @@ const Picture = styled.img`
     border-radius: 1rem;
   }
 `;
+const Loading = styled.div`
+display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
 export default Top;

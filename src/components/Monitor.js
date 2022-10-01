@@ -22,7 +22,7 @@ const Monitor = () => {
         mode: "cors",
         url: "http://localhost:8000/api/getDetails/monitor",
       });
-
+      console.log(response.data.visits)
       dispatch(
         monitorActions.setMonitorData({
           total: response.data.total,
@@ -30,6 +30,7 @@ const Monitor = () => {
           print: response.data.print,
           renders: response.data.renders.resources.length,
           favorites: response.data.favorites,
+          visits:response.data.visits
         })
       );
     } catch (error) {

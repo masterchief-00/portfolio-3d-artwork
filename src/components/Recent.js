@@ -1,8 +1,8 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import Fade from "react-reveal/Fade";
 import Jump from "react-reveal/Jump";
-import {BsFillCalendarDayFill} from 'react-icons/bs'
+import { BsFillCalendarDayFill } from "react-icons/bs";
 import {
   Navigation,
   Pagination,
@@ -16,11 +16,16 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "swiper/css/autoplay";
 
-import IMG1 from "../assets/projects/klingonMiner01.jpg";
-import IMG2 from "../assets/projects/statue10.jpg";
-import IMG3 from "../assets/projects/borgQueenv2_01.jpg";
+import { useDispatch, useSelector } from "react-redux";
+import { renderActions } from "../store/render-slice";
+
+import IMG1 from "../assets/loader.gif";
 
 const Recent = () => {
+  const recents = useSelector((state) => state.render.recents);
+  const dataReady = useSelector((state) => state.render.ready);
+  const dispatch = useDispatch();
+
   return (
     <Container id="recent">
       <Jump bottom>
@@ -46,30 +51,20 @@ const Recent = () => {
         pagination={{ clickable: true }}
         scrollbar={{ draggable: true }}
       >
-        <SwiperSlide className="slide">
-          <Card>
-            <Picture src={IMG1} alt="" />
-            <p>
-              There are many variations of passages of Lorem Ipsum available
-            </p>
-          </Card>
-        </SwiperSlide>
-        <SwiperSlide className="slide">
-          <Card>
-            <Picture src={IMG2} alt="" />
-            <p>
-              There are many variations of passages of Lorem Ipsum available
-            </p>
-          </Card>
-        </SwiperSlide>
-        <SwiperSlide className="slide">
-          <Card>
-            <Picture src={IMG3} alt="" />
-            <p>
-              There are many variations of passages of Lorem Ipsum available
-            </p>
-          </Card>
-        </SwiperSlide>
+        {!dataReady && (
+          <Loading>
+            <img src={IMG1} alt="loading" />
+          </Loading>
+        )}
+        {recents.map((project) => (
+          <SwiperSlide className="slide" key={project.id}>
+            <Card>
+              <Picture src={project.imageSource} alt={project.title} />
+              <h3>{project.title}</h3>
+              <p>{project.body}</p>
+            </Card>
+          </SwiperSlide>
+        ))}
       </Swiper>
     </Container>
   );
@@ -173,5 +168,10 @@ const Picture = styled.img`
     height: 30vh;
     border-radius: 1rem;
   }
+`;
+const Loading = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 export default Recent;
